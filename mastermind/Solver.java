@@ -33,6 +33,7 @@ public class Solver {
 	public static void answer() {
 		int size = MasterMind.getzigen();
 		int limit = MasterMind.getlimit();
+		int counter = 0;
 		int[][] hint = new int[2][2];
 		char[] deck = initDeck(size);
 		HashMap<Character, Integer> contains = initContains();
@@ -40,25 +41,26 @@ public class Solver {
 		hint[0] = Arrays.copyOf(MasterMind.evaluate(deck), 2);
 		hint[1] = Arrays.copyOf(hint[0], 2);
 		contains.put(deck[0], hint[0][1]);
+		counter++;
 
 		for(int i=0; i<size; i++){
 			int now = deck[i] - 'A', prev = deck[i] - 'A';
-			while(hint[0][0] == hint[1][0] && hint[0][0] != size){
+			while(hint[0][0] == hint[1][0] && hint[1][0] != size){
 				prev = now;
 				now++;
 				if(contains.get(alphabet[now % 26]) == 0) continue;
 				contains.put(alphabet[prev % 26], hint[1][1] - contains.get('A'));
 				deck[i] = alphabet[now % 26];
 				hint[1] = Arrays.copyOf(MasterMind.evaluate(deck), 2);
+				counter++;
+				if(counter == limit-1) break;
 			}
+			if(counter == limit-1) break;
 			if(hint[0][0] > hint[1][0]) deck[i] = alphabet[prev % 26];
-
-			if(hint[1][0] != size)hint[0] = Arrays.copyOf(MasterMind.evaluate(deck), 2);
+			hint[0] = Arrays.copyOf(MasterMind.evaluate(deck), 2);
 			hint[1] = Arrays.copyOf(hint[0], 2);
+			counter++;
 		}
-
-		System.err.println("n*13="+size*13);
-
 		MasterMind.submit(deck);
 	}
 }
