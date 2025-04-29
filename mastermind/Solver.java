@@ -22,10 +22,10 @@ public class Solver {
 		return deck;
 	}
 
-	public static HashMap<Character, Integer> initContains() {
-		HashMap<Character, Integer> contains = new HashMap<>();
+	public static HashMap<Character, Boolean> initContains() {
+		HashMap<Character, Boolean> contains = new HashMap<>();
 		for (char c : alphabet) {
-			contains.put(c, -1);
+			contains.put(c, true);
 		}
 		return contains;
 	}
@@ -33,34 +33,33 @@ public class Solver {
 	public static void answer() {
 		int size = MasterMind.getzigen();
 		int limit = MasterMind.getlimit();
-		int counter = 0;
-		int[][] hint = new int[2][2];
-		char[] deck = initDeck(size);
-		HashMap<Character, Integer> contains = initContains();
+		int[][] hints = new int[2][2];
+		char[] guess = initDeck(size);
+		HashMap<Character, Boolean> contains = initContains();
 
-		hint[0] = Arrays.copyOf(MasterMind.evaluate(deck), 2);
-		hint[1] = Arrays.copyOf(hint[0], 2);
-		contains.put(deck[0], hint[0][1]);
-		counter++;
+		hints[0] = Arrays.copyOf(MasterMind.evaluate(guess), 2);
+		hints[1] = Arrays.copyOf(hints[0], 2);
 
-		for(int i=0; i<size; i++){
-			int now = deck[i] - 'A', prev = deck[i] - 'A';
-			while(hint[0][0] == hint[1][0] && hint[1][0] != size){
-				prev = now;
-				now++;
-				if(contains.get(alphabet[now % 26]) == 0) continue;
-				contains.put(alphabet[prev % 26], hint[1][1] - contains.get('A'));
-				deck[i] = alphabet[now % 26];
-				hint[1] = Arrays.copyOf(MasterMind.evaluate(deck), 2);
-				counter++;
-				if(counter == limit-1) break;
+		for(int i = 0; i < size; i++){
+			int prev = 0;
+			int[] save = hints[0];
+			for(int j = 1; j <= 26; j++){
+				int idx = j % 26;
+				if(!contains.get(alphabet[idx]))continue;
+				guess[i] = alphabet[idx];
+				hints[1] = Arrays.copyOf(MasterMind.evaluate(guess), 2);
+				if(hints[1][1] == 0)contains.put(alphabet[idx], false);
+				if(save[0] != hints[1][0])break;
+				prev = idx;
 			}
-			if(counter == limit-1) break;
-			if(hint[0][0] > hint[1][0]) deck[i] = alphabet[prev % 26];
-			hint[0] = Arrays.copyOf(MasterMind.evaluate(deck), 2);
-			hint[1] = Arrays.copyOf(hint[0], 2);
-			counter++;
+			hints[0] = Arrays.copyOf(hints[1], 2);
+			if(hints[1][0] < save[0]){
+				guess[i] = alphabet[prev];
+				hints[0][0]++;
+			}
+			contains.put(guess[i], true);
 		}
-		MasterMind.submit(deck);
+
+		MasterMind.submit(guess);
 	}
 }
