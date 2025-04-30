@@ -35,6 +35,7 @@ public class contains {
 		int[][] hints = new int[2][2];
 		char[] guess = initDeck(size);
 		HashMap<Character, Boolean> contains = initContains();
+		// System.err.println("max = " + size*13 + " size = " + size + " limit = " + limit);
 
 		hints[0] = Arrays.copyOf(MasterMind.evaluate(guess), 2);
 		hints[1] = Arrays.copyOf(hints[0], 2);

@@ -39,7 +39,7 @@ public class probability {
 		char[] guess = initDeck(size);
 		HashMap<Character, Integer> contains = initContains();
 
-		System.err.println("max = " + size*13 + " size = " + size + " limit = " + limit);
+		// System.err.println("max = " + size*13 + " size = " + size + " limit = " + limit);
 
 		for(char c : alphabet){
 			for(int i = 0; i < size; i++) guess[i] = c;
