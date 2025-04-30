@@ -9,7 +9,7 @@
 
 ### 前提条件
 
-- Dev Container
+- Java11
 
 ### 実行手順
 
