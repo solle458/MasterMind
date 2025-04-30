@@ -17,10 +17,10 @@
 # リポジトリをクローン
 git clone https://github.com/solle458/MasterMind.git
 cd MasterMind
-```
 
 # ソースコードをコンパイル
 make
 
 # ゲームを起動
 java MasterMind
+```
