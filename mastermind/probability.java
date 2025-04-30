@@ -1,7 +1,6 @@
 import java.util.Arrays;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Map;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -34,7 +33,6 @@ public class probability {
 
 	public static void answer() {
 		int size = MasterMind.getzigen();
-		int limit = MasterMind.getlimit();
 		int[][] hints = new int[2][2];
 		char[] guess = initDeck(size);
 		HashMap<Character, Integer> contains = initContains();

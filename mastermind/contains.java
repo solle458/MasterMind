@@ -1,5 +1,4 @@
 import java.util.Arrays;
-import java.util.Map;
 import java.util.HashMap;
 
 public class contains {
@@ -31,7 +30,6 @@ public class contains {
 
 	public static void answer() {
 		int size = MasterMind.getzigen();
-		int limit = MasterMind.getlimit();
 		int[][] hints = new int[2][2];
 		char[] guess = initDeck(size);
 		HashMap<Character, Boolean> contains = initContains();
